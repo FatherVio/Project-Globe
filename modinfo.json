@@ -1,0 +1,14 @@
+{
+    "$schema": "https://moddbcdn.vintagestory.at/schema/modinfo.latest.json",
+    "type": "code",
+    "modid": "projectglobe",
+    "name": "Project Globe",
+    "authors": [
+        "KumaVio"
+    ],
+    "description": "A silly little mod that gives the world wrap around/globe logic.",
+    "version": "0.1.0",
+    "dependencies": {
+        "game": "1.22.7"
+    }
+}
