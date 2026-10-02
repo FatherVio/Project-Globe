@@ -7,7 +7,7 @@
         "KumaVio"
     ],
     "description": "A silly little mod that gives the world wrap around/globe logic.",
-    "version": "0.1.0",
+    "version": "0.1.6",
     "dependencies": {
         "game": "1.22.7"
     }
