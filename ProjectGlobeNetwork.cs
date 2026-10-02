@@ -2,13 +2,15 @@ using ProtoBuf;
 
 namespace projectglobe;
 
-public class ProjectGlobeNetwork
+internal static class ProjectGlobeNetwork
 {
     internal const string ChannelName = "projectglobe-yaw";
 }
 
-[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+[ProtoContract]
 public sealed class PoleCrossingPacket
 {
-
+    [ProtoMember(1)] public bool Mounted;
+    [ProtoMember(2)] public long MountEntityId;
+    [ProtoMember(3)] public float MountYaw;
 }
