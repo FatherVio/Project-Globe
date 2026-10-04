@@ -7,12 +7,12 @@ namespace projectglobe;
 
 public sealed class ProjectGlobeConfig
 {
-    private const string FileName = "projectglobe.json";
-    private const int CurrentVersion = 1;
+    private const string FileName = "ProjectGlobeConfig.json";
+    private const int CurrentVersion = 2;
 
     public int ConfigVersion = CurrentVersion;
     
-    public int TriggerMargin = 3; //Blocks from the border at which a crossing triggers.
+    public int TriggerMargin = 1; //Blocks from the border at which a crossing triggers.
     
     public int PreloadDistance = 256; //How far from the border (blocks) the destination starts loading.
     
@@ -21,10 +21,25 @@ public sealed class ProjectGlobeConfig
     public bool EnableEdgeRescue = true; //Put players back on the map if they end up outside it or below the world.
     
     public int RescueBelowY = -16;
-    
+
     public bool EnableEdgeTerrainSync = false; // !!!Experimental. Touch at your own risk!!! Currently not functional.
     
-    public int EdgeSyncWidth = 192; //How far in from the seam (blocks) the bias fades out.
+    public int EdgeSyncWidth = 256; //How far in from the seam (blocks) the bias fades out.
+    
+    public bool EnableGlobeClimate = false; // Force 1 equator at map center and 2 poles at N/S borders.
+    
+    public bool EnableInitialLatitudeTeleport = false; // Teleport newly spawned players from equator to startingClimate latitude once.
+    
+    public int EquatorSpawnLoadRadius = 2; // Chunk radius around equator spawn that must generate before teleporting.
+    
+    public int LatitudeDestinationLoadRadius = 2; // Chunk radius to generate/load around the target latitude before teleporting.
+    
+    public int LatitudeArrivalSearchRadius = 16; // Block search radius for a clear landing spot at the target latitude.
+    
+    public bool EnablePolarLandBias = false;
+    
+    public int PolarLandCorePercent = 5;
+    public int PolarLandTransitionPercent = 10;
 
     public static ProjectGlobeConfig Load(ICoreServerAPI api)
     {
@@ -60,8 +75,21 @@ public sealed class ProjectGlobeConfig
     {
         TriggerMargin = Limit(nameof(TriggerMargin), TriggerMargin, 1, 64, log);
         PreloadDistance = Limit(nameof(PreloadDistance), PreloadDistance, 0, 2048, log);
-        RescueBelowY = Limit(nameof(RescueBelowY), RescueBelowY, -512, 0, log);
         EdgeSyncWidth = Limit(nameof(EdgeSyncWidth), EdgeSyncWidth, 32, 2048, log);
+        EquatorSpawnLoadRadius = Limit(nameof(EquatorSpawnLoadRadius), EquatorSpawnLoadRadius, 1, 8, log);
+        LatitudeDestinationLoadRadius = Limit(nameof(LatitudeDestinationLoadRadius), LatitudeDestinationLoadRadius, 1, 8, log);
+        LatitudeArrivalSearchRadius = Limit(nameof(LatitudeArrivalSearchRadius), LatitudeArrivalSearchRadius, 4, 64, log);
+        RescueBelowY = Limit(nameof(RescueBelowY), RescueBelowY, -512, 0, log);
+        PolarLandCorePercent = Limit(nameof(PolarLandCorePercent), PolarLandCorePercent, 1, 40, log);
+        PolarLandTransitionPercent = Limit(nameof(PolarLandTransitionPercent), PolarLandTransitionPercent, 1, 70, log);
+
+        if (PolarLandTransitionPercent < PolarLandCorePercent)
+        {
+            log.Warning(
+                "[projectglobe] PolarLandTransitionPercent must be at least PolarLandCorePercent; raising it to {0}.",
+                PolarLandCorePercent);
+            PolarLandTransitionPercent = PolarLandCorePercent;
+        }
         ConfigVersion = CurrentVersion;
     }
 
