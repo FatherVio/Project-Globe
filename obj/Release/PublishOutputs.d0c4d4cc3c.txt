@@ -1,0 +1,5 @@
+/home/kumavio/RiderProjects/projectglobeDEV/projectglobe/bin/Release/Mods/mod/publish/modinfo.json
+/home/kumavio/RiderProjects/projectglobeDEV/projectglobe/bin/Release/Mods/mod/publish/modicon.png
+/home/kumavio/RiderProjects/projectglobeDEV/projectglobe/bin/Release/Mods/mod/publish/projectglobe.dll
+/home/kumavio/RiderProjects/projectglobeDEV/projectglobe/bin/Release/Mods/mod/publish/projectglobe.deps.json
+/home/kumavio/RiderProjects/projectglobeDEV/projectglobe/bin/Release/Mods/mod/publish/projectglobe.pdb
